@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "fmmc",
+  "version": "${version}",
+  "name": "FMMC",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/fmmc/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "fabric-datagen": [
+      "net.me.fmmc.client.MainDataGenerator"
+    ],
+    "client": [
+      "net.me.fmmc.client.MainClient",
+      "net.me.fmmc.client.rendering.particles.ModParticles"
+    ],
+    "main": [
+      "net.me.fmmc.Main",
+      "net.me.fmmc.client.rendering.particles.ModParticles"
+    ]
+  },
+  "mixins": [
+    "fmmc.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}

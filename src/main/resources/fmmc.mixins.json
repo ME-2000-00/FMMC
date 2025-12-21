@@ -1,0 +1,18 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.me.fmmc.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "PlayerDamageMixin"
+  ],
+  "client": [
+    "PlayerHandMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}
