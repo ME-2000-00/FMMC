@@ -16,6 +16,7 @@
     "client": [
       "net.me.fmmc.client.MainClient",
       "net.me.fmmc.client.rendering.particles.ModParticles"
+
     ],
     "main": [
       "net.me.fmmc.Main",
