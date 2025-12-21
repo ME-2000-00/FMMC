@@ -14,6 +14,7 @@ import net.minecraft.util.math.Vec3d;
 import java.util.Objects;
 
 public class KeyHandler {
+
     public static void register() {
 
 
@@ -28,15 +29,18 @@ public class KeyHandler {
 
             if (KeyBinds.ABILITY1.wasPressed() && holdingScythe) {  // check for input
                 main.set(ModDataComponents.IS_BLOCKING, true);      // set ability to true
+                main.set(ModDataComponents.COOLDOWN_BLOCKING, MainClient.MAX_BLOOCKING);      // set ability to true
                 // start cooldown for ability
             }
 
             if (KeyBinds.ABILITY2.wasPressed() && holdingScythe) {
                 main.set(ModDataComponents.IS_SLASHING, true);
+                main.set(ModDataComponents.COOLDOWN_SLASHING, MainClient.MAX_SLASHING);      // set ability to true
             }
 
             if (KeyBinds.ULTI.wasPressed() && holdingScythe) {
                 main.set(ModDataComponents.IS_ULTING, true);
+                main.set(ModDataComponents.COOLDOWN_ULTING, MainClient.MAX_ULTI);      // set ability to true
             }
 
 

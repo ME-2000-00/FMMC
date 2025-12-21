@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
@@ -16,27 +17,12 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Scythe extends SwordItem {
 
     public Scythe(ToolMaterial toolMaterial, Settings settings) {
-
-
         super(toolMaterial, settings);
-    }
-
-    @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        RightClickAction(user, world, hand);
-        return super.use(world, user, hand);
-    }
-
-    public void RightClickAction(PlayerEntity player, World world, Hand hand) {
-        Main.LOGGER.info("RIGHT CLICK with SCYTHE!");
-    }
-
-    public void LeftClickAction(PlayerEntity player, World world, Hand hand, Entity target) {
-        Main.LOGGER.info("LEFT CLICK with SCYTHE!");
     }
 
     @Override
@@ -48,16 +34,5 @@ public class Scythe extends SwordItem {
 
 
         super.appendTooltip(stack, context, tooltip, type);
-    }
-
-    @Override
-    public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        if (world.isClient) return;
-
-        // do ability logic here
-
-
-
-
     }
 }

@@ -9,6 +9,7 @@ import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
 import net.minecraft.item.SwordItem;
@@ -22,20 +23,37 @@ public class ModItems {
 
     public static final Item SCYTHE = registerItem("scythe",
             new Scythe(ToolMaterials.DIAMOND, new Item.Settings().maxCount(1).rarity(Rarity.EPIC)
-                    .component(DataComponentTypes.ATTRIBUTE_MODIFIERS, AttributeModifiersComponent.builder().add(
-                            net.minecraft.entity.attribute.EntityAttributes.GENERIC_ATTACK_DAMAGE,
-                            new net.minecraft.entity.attribute.EntityAttributeModifier(
-                                    Item.BASE_ATTACK_DAMAGE_MODIFIER_ID,
-                                    12.0,
-                                    EntityAttributeModifier.Operation.ADD_VALUE
-                            ),
-                                    AttributeModifierSlot.MAINHAND).build())
+                    .component(
+                            DataComponentTypes.ATTRIBUTE_MODIFIERS,
+                            AttributeModifiersComponent.builder()
+                                    // Attack damage
+                                    .add(
+                                            EntityAttributes.GENERIC_ATTACK_DAMAGE,
+                                            new EntityAttributeModifier(
+                                                    Item.BASE_ATTACK_DAMAGE_MODIFIER_ID,
+                                                    15.0,
+                                                    EntityAttributeModifier.Operation.ADD_VALUE
+                                            ),
+                                            AttributeModifierSlot.MAINHAND
+                                    )
+                                    // Attack speed (LOW = slow weapon)
+                                    .add(
+                                            EntityAttributes.GENERIC_ATTACK_SPEED,
+                                            new EntityAttributeModifier(
+                                                    Item.BASE_ATTACK_SPEED_MODIFIER_ID,
+                                                    -3.5, // VERY slow (scythe feel)
+                                                    EntityAttributeModifier.Operation.ADD_VALUE
+                                            ),
+                                            AttributeModifierSlot.MAINHAND
+                                    )
+                                    .build()
+                    )
                     .component(ModDataComponents.IS_BLOCKING      , false)
                     .component(ModDataComponents.IS_SLASHING      , false)
                     .component(ModDataComponents.IS_ULTING        , false)
-                    .component(ModDataComponents.COOLDOWN_BLOCKING, -1   )
-                    .component(ModDataComponents.COOLDOWN_SLASHING, -1   )
-                    .component(ModDataComponents.COOLDOWN_ULTING  , -1   )));
+                    .component(ModDataComponents.COOLDOWN_BLOCKING, 0    )
+                    .component(ModDataComponents.COOLDOWN_SLASHING, 0    )
+                    .component(ModDataComponents.COOLDOWN_ULTING  , 0    )));
 
     public static final Item STAFF = registerItem("staff",
             new MagicStaff(new Item.Settings().maxCount(1)));

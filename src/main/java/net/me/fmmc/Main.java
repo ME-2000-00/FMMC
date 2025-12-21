@@ -9,7 +9,10 @@ import net.me.fmmc.commands.ModCommands;
 import net.me.fmmc.component.ModDataComponents;
 import net.me.fmmc.items.ModItems;
 import net.me.fmmc.items.custom.Scythe;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ActionResult;
+import net.minecraft.world.World;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,12 +27,18 @@ public class Main implements ModInitializer {
         ModCommands.register();
         ModDataComponents.register();
 
-        // for left-clicking with the scythe
-        AttackEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> {
-            if (player.getStackInHand(hand).isOf(ModItems.SCYTHE)) {
-                ((Scythe) ModItems.SCYTHE).LeftClickAction(player, world, hand, entity);
+        ServerTickEvents.START_SERVER_TICK.register(Server -> {
+            ServerWorld world = null;
+
+            for (RegistryKey<World> key : Server.getWorldRegistryKeys()) {
+                world = Server.getWorld(key);
             }
-            return ActionResult.PASS;
+
+            if (world != null) {
+                // do server world based effects here if needed
+            }
+
+
         });
     }
 }
