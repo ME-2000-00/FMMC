@@ -16,12 +16,12 @@ public class RuneParticle extends SpriteBillboardParticle {
         super(clientWorld, d, e, f, g, h, i);
         this.sprites = sprite;
 
-        this.scale = 3.0f;
-        this.velocityMultiplier = 0.0f;
-        this.gravityStrength = 0.0f;
+        this.scale = 0.2f;
+        this.velocityMultiplier = 0.9f;
+        this.alpha = 0.8f;
 
-        this.maxAge = 3;
-        this.setSpriteForAge(this.sprites);
+        this.maxAge = 25 + this.random.nextInt(5);
+        this.setSprite(this.sprites.getSprite(clientWorld.random));
     }
 
     @Override
@@ -32,11 +32,5 @@ public class RuneParticle extends SpriteBillboardParticle {
     @Override
     public void tick() {
         super.tick();
-
-        this.velocityMultiplier = 0.0f;
-        this.gravityStrength = 0.0f;
-        this.scale = 0.2f + ((float)this.age / (float)this.maxAge);
-
-        this.setSpriteForAge(this.sprites);
     }
 }
