@@ -3,18 +3,26 @@ package net.me.fmmc;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.me.fmmc.client.rendering.particles.ModParticles;
 import net.me.fmmc.component.ModDataComponents;
 import net.me.fmmc.effect.ModEffects;
 import net.me.fmmc.items.ModItems;
 import net.me.fmmc.payload.ModPayloads;
+import net.me.fmmc.timer.TimerHandeler;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.util.math.Box;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 public class Main implements ModInitializer {
     public static final String MOD_ID = "fmmc";
@@ -22,6 +30,8 @@ public class Main implements ModInitializer {
 
     public static int BLOCKING_COOLD = 60 * 20;
     public static int SLASHING_COOLD = 45 * 20;
+
+//    public static TimerHandeler timerHandeler = new TimerHandeler();
 
     @Override
     public void onInitialize() {
@@ -62,6 +72,56 @@ public class Main implements ModInitializer {
 
 
 
+        ServerTickEvents.END_WORLD_TICK.register(serverWorld -> {
+            serverWorld.getPlayers().forEach(player -> {
+                if (player.hasStatusEffect(Registries.STATUS_EFFECT.getEntry(ModEffects.SLASH_EFFECT))) {
+                    LOGGER.info( player.getName().getString() + "has slashing effect");
+                    // player has slashing effect
+
+
+                    serverWorld.spawnParticles(
+                            ModParticles.SLASH_PARTICLE,
+                            player.getX() + (Math.random() * 5) - 2.5,
+                            player.getY() + (Math.random() * 2 ) + 1,
+                            player.getZ() + (Math.random() * 5) - 2.5,
+                            1,
+                            0.5,
+                            0.5,
+                            0.5,
+                            0.3
+                    );
+
+
+                    int maxDistanceFromPlayer = 5;
+
+                    Box damageBox = new Box(player.getBlockPos()).expand(maxDistanceFromPlayer);
+
+                    List<LivingEntity> entities = player.getWorld().getEntitiesByClass(
+                            LivingEntity.class,
+                            damageBox,
+                            e -> e.isAlive() && e != player // don’t hit yourself
+                    );
+
+                    for (LivingEntity target : entities) {
+                        target.damage(player.getDamageSources().playerAttack(player), 1.5f);
+                    }
+                }
+
+                if (player.getMainHandStack().getOrDefault(ModDataComponents.ULT_KILLS, 0) == 3) {
+                    serverWorld.spawnParticles(
+                            ModParticles.RUNE_PARTICLE,
+                            player.getX() + (Math.random()),
+                            player.getY() + (Math.random()),
+                            player.getZ() + (Math.random()),
+                            1,
+                            0.5,
+                            0.5,
+                            0.5,
+                            0.3
+                    );
+                }
+            });
+        });
 
 
 

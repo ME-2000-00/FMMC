@@ -36,6 +36,7 @@ public class KeyHandler {
             if (KeyBinds.ULTI.wasPressed() && holdingScythe && main.get(ModDataComponents.ULT_KILLS) >= 3) {
                 ClientPlayNetworking.send(new UltingPayload(true));
             }
+
         });
     }
 }

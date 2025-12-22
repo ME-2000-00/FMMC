@@ -57,29 +57,19 @@ public class ModNetworking {
                 player.getMainHandStack().set(ModDataComponents.COOLDOWN_SLASHING, payload.cooldown());
                 // make slashing logic
                 ServerWorld world = context.server().getWorld(player.getWorld().getRegistryKey());
-                for (int i = 0; i < 25; i++) {
-                    world.spawnParticles(
-                            ModParticles.SLASH_PARTICLE,
-                            player.getX() + (Math.random() * 10) - 5,
-                            player.getY() + (Math.random() * 10) - 5,
-                            player.getZ() + (Math.random() * 10) - 5,
-                            1,
-                            0.5,
-                            0.5,
-                            0.5,
-                            0.3
-                    );
-                }
 
-                int maxDistanceFromPlayer = 10;
-                Box damage_box = new Box(player.getBlockPos()).expand(maxDistanceFromPlayer);
-                List entityList = player.getWorld().getEntitiesByClass(MobEntity.class, damage_box, e -> e.isAlive());
-                for (Object entity : entityList) {
-                    if (entity instanceof MobEntity){
-                        ((MobEntity) entity).damage(player.getDamageSources().generic(), ((MobEntity) entity).getMaxHealth() * 0.6f);
-                    }
-                }
+                // do slashes over 3 seconds : 60 ticks
 
+                player.addStatusEffect(
+                        new StatusEffectInstance(
+                                Registries.STATUS_EFFECT.getEntry(ModEffects.SLASH_EFFECT),
+                                20 * 3,     // duration in ticks
+                                0,      // amplifier
+                                false,  // ambient
+                                false,  // particles
+                                false   // show icon
+                        )
+                );
             });
         });
 
