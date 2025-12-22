@@ -3,8 +3,12 @@ package net.me.fmmc.client.keybinds;
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.me.fmmc.Main;
+import net.me.fmmc.component.ModDataComponents;
 import net.me.fmmc.items.ModItems;
 import net.me.fmmc.payload.payloads.BlockingPayload;
+import net.me.fmmc.payload.payloads.SlashingPayload;
+import net.me.fmmc.payload.payloads.UltingPayload;
 import net.minecraft.item.ItemStack;
 
 public class KeyHandler {
@@ -21,22 +25,17 @@ public class KeyHandler {
             boolean holdingScythe = main.getItem() == ModItems.SCYTHE;
 //            boolean holdingScythe = main.getItem() == ModItems.SCYTHE || off.getItem() == ModItems.SCYTHE;
 
-            if (KeyBinds.ABILITY1.wasPressed() && holdingScythe) {  // check for input
-                // send packet to server
-                ClientPlayNetworking.send(new BlockingPayload(true));
-                // let server update data component
-                // server will handle ability logic
+            if (KeyBinds.ABILITY1.wasPressed() && holdingScythe && main.get(ModDataComponents.COOLDOWN_BLOCKING) < 1) {  // check for input
+                ClientPlayNetworking.send(new BlockingPayload(true, Main.BLOCKING_COOLD)); // 60 seconds cooldown
             }
 
-            if (KeyBinds.ABILITY2.wasPressed() && holdingScythe) {
-                ClientPlayNetworking.send(new BlockingPayload(true));
+            if (KeyBinds.ABILITY2.wasPressed() && holdingScythe && main.get(ModDataComponents.COOLDOWN_SLASHING) < 1) {
+                ClientPlayNetworking.send(new SlashingPayload(true, Main.SLASHING_COOLD)); // 45 seconds cooldown
             }
 
-            if (KeyBinds.ULTI.wasPressed() && holdingScythe) {
-                ClientPlayNetworking.send(new BlockingPayload(true));
+            if (KeyBinds.ULTI.wasPressed() && holdingScythe && main.get(ModDataComponents.ULT_KILLS) >= 3) {
+                ClientPlayNetworking.send(new UltingPayload(true));
             }
-
-
         });
     }
 }

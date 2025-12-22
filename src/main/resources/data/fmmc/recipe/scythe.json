@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "d": {
+      "item": "minecraft:diamond"
+    },
+    "i": {
+      "item": "minecraft:breeze_rod"
+    },
+    "w": {
+      "item": "minecraft:brown_wool"
+    }
+  },
+  "pattern": [
+    "ddd",
+    "wid",
+    "iw "
+  ],
+  "result": {
+    "count": 1,
+    "id": "fmmc:scythe"
+  }
+}

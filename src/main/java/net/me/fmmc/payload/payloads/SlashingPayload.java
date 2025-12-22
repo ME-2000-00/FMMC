@@ -7,15 +7,18 @@ import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.util.Identifier;
 
-public record SlashingPayload(boolean slashing) implements CustomPayload {
+public record SlashingPayload(boolean slashing, int cooldown) implements CustomPayload {
 
     public static final Id<SlashingPayload> ID =
-            new Id<>(Identifier.of(Main.MOD_ID, "slashing"));
+            new CustomPayload.Id<>(Identifier.of(Main.MOD_ID, "slashing"));
 
     public static final PacketCodec<ByteBuf, SlashingPayload> CODEC =
-            PacketCodecs.BOOL.xmap(
-                    SlashingPayload::new,
-                    SlashingPayload::slashing
+            PacketCodec.of(
+                    (value, buf) -> {
+                        buf.writeBoolean(value.slashing());
+                        buf.writeInt(value.cooldown());
+                    },
+                    buf -> new SlashingPayload(buf.readBoolean(), buf.readInt())
             );
 
     @Override

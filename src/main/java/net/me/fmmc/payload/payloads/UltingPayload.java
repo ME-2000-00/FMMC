@@ -9,13 +9,15 @@ import net.minecraft.util.Identifier;
 
 public record UltingPayload(boolean ulting) implements CustomPayload {
 
-    public static final Id<UltingPayload> ID =
-            new Id<>(Identifier.of(Main.MOD_ID, "ulting"));
+        public static final Id<UltingPayload> ID =
+            new CustomPayload.Id<>(Identifier.of(Main.MOD_ID, "ulting"));
 
     public static final PacketCodec<ByteBuf, UltingPayload> CODEC =
-            PacketCodecs.BOOL.xmap(
-                    UltingPayload::new,
-                    UltingPayload::ulting
+            PacketCodec.of(
+                    (value, buf) -> {
+                        buf.writeBoolean(value.ulting);
+                    },
+                    buf -> new UltingPayload(buf.readBoolean())
             );
 
     @Override
@@ -23,3 +25,4 @@ public record UltingPayload(boolean ulting) implements CustomPayload {
         return ID;
     }
 }
+

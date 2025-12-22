@@ -1,7 +1,9 @@
 {
   "item.fmmc.scythe": "Scythe",
-  "item.fmmc.staff": "staff",
-  "item.fmmc.scythe.ability1": "V: blocking ability",
-  "item.fmmc.scythe.ability2": "C: slashing ability",
-  "item.fmmc.scythe.ultimate": "X: a fucking glock "
+  "item.fmmc.scythe.ability1": "V: Path of Charity   Cooldown: 1min",
+  "item.fmmc.scythe.ability2": "C: Whirlwind Swing   Cooldown: 45 seconds",
+  "item.fmmc.scythe.ultimate": "X: just a Glock      Needs 3 kills",
+
+
+  "item.fmmc.staff": "staff"
 }

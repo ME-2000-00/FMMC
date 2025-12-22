@@ -20,7 +20,7 @@ public class ModDataComponents {
     // integers
     public static final ComponentType<Integer> COOLDOWN_BLOCKING = regsiterComponent("cooldown_blocking", b -> b.codec(Codec.INT));
     public static final ComponentType<Integer> COOLDOWN_SLASHING = regsiterComponent("cooldown_slashing", b -> b.codec(Codec.INT));
-    public static final ComponentType<Integer> COOLDOWN_ULTING = regsiterComponent("cooldown_ulting", b -> b.codec(Codec.INT));
+    public static final ComponentType<Integer> ULT_KILLS = regsiterComponent("ultimate_kills", b -> b.codec(Codec.INT));
 
     private static <T>ComponentType<T> regsiterComponent(String name, UnaryOperator<ComponentType.Builder<T>> builderOperator) {
         return Registry.register(Registries.DATA_COMPONENT_TYPE, Identifier.of(Main.MOD_ID, name),
