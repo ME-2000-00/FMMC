@@ -11,7 +11,9 @@ public class BlockParticle extends SpriteBillboardParticle {
         super(clientWorld, d, e, f, g, h, i);
 
         this.velocityMultiplier = 0.8f;
-        this.gravityStrength = 0.0f;
+        this.gravityStrength = 0.2f;
+        this.scale = 0.2f;
+        this.alpha = 0.5f;
 
         this.maxAge = 20 + this.random.nextInt(10);
     }
@@ -24,9 +26,5 @@ public class BlockParticle extends SpriteBillboardParticle {
     @Override
     public void tick() {
         super.tick();
-
-
-        this.alpha = ( 1.0f - ((float)this.age / (float)this.maxAge) ) + 0.2f;
-        this.scale = 0.2f + ((float)this.age / (float)this.maxAge);
     }
 }

@@ -1,20 +1,26 @@
 package net.me.fmmc.client.rendering.gui;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.me.fmmc.Main;
 import net.me.fmmc.client.MainClient;
 import net.me.fmmc.component.ModDataComponents;
 import net.me.fmmc.items.ModItems;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.option.Perspective;
+import net.minecraft.client.render.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Vec3d;
 
 public class ScytheGui {
     public static void register() {
         HudRenderCallback.EVENT.register(((drawContext, renderTickCounter) -> {
 
             MinecraftClient client = MinecraftClient.getInstance();
+            ClientPlayerEntity player = client.player;
+
             if (client.player == null) return;
 
             ItemStack main = client.player.getMainHandStack();
@@ -23,13 +29,14 @@ public class ScytheGui {
 
             // render gui her
             if (holdingScythe && !client.options.hudHidden) {
+
                 int width  = client.getWindow().getScaledWidth();
                 int height = client.getWindow().getScaledHeight();
 
                 drawContext.getMatrices().push();
 
                 // ulti X
-                if (main.getOrDefault(ModDataComponents.ULT_KILLS, 0) >= 3) {
+                if (main.getOrDefault(ModDataComponents.ULT_KILLS, 0) >= Main.MAX_ULT_KILLS) {
                     drawContext.drawTexture(Identifier.of(Main.MOD_ID, "textures/gui/ulti1.png"), 2, height - 39, 0, 0, 37, 37, 37, 37);
                 } else {
                     drawContext.drawTexture(Identifier.of(Main.MOD_ID, "textures/gui/ulti1_dark.png"), 2, height - 39, 0, 0, 37, 37, 37, 37);

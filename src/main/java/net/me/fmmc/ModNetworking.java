@@ -1,20 +1,17 @@
 package net.me.fmmc;
 
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.me.fmmc.client.rendering.particles.ModParticles;
 import net.me.fmmc.component.ModDataComponents;
 import net.me.fmmc.effect.ModEffects;
 import net.me.fmmc.payload.payloads.BlockingPayload;
 import net.me.fmmc.payload.payloads.SlashingPayload;
 import net.me.fmmc.payload.payloads.UltingPayload;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.registry.Registries;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.Box;
-
-import java.util.List;
+import net.minecraft.util.math.Vec3d;
+import org.apache.logging.log4j.core.jmx.Server;
 
 
 public class ModNetworking {
@@ -41,9 +38,6 @@ public class ModNetworking {
                                 false   // show icon
                         )
                 );
-
-
-                world.spawnParticles(ModParticles.BLOCK_PARTICLE, player.getX(), player.getY() + 1.0, player.getZ(), 5, 0.5, 0.5, 0.5, 0.0);
             });
         });
 
@@ -81,11 +75,7 @@ public class ModNetworking {
                 // Update the main-hand ItemStack component
                 player.getMainHandStack().set(ModDataComponents.IS_ULTING, payload.ulting());
                 // ult logic here
-
-
-
-                // reset ult boolean
-//                player.getMainHandStack().set(ModDataComponents.IS_ULTING, false);
+                Util.fireBeam((ServerWorld) player.getWorld(), player);
             });
         });
     }

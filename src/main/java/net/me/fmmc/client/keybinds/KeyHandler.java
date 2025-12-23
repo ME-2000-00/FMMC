@@ -33,7 +33,7 @@ public class KeyHandler {
                 ClientPlayNetworking.send(new SlashingPayload(true, Main.SLASHING_COOLD)); // 45 seconds cooldown
             }
 
-            if (KeyBinds.ULTI.wasPressed() && holdingScythe && main.get(ModDataComponents.ULT_KILLS) >= 3) {
+            if (KeyBinds.ULTI.wasPressed() && holdingScythe && main.get(ModDataComponents.ULT_KILLS) >= Main.MAX_ULT_KILLS) {
                 ClientPlayNetworking.send(new UltingPayload(true));
             }
 
